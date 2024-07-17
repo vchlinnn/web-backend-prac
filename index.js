@@ -29,6 +29,7 @@ let notes = [
   const app = http.createServer((request, response) => {
     // event handler - called everytime an HTTP request is made
     response.writeHead(200, { 'Content-Type': 'application/json' }) // the data is in json format
+    // notes array gets transformed to json format
     response.end(JSON.stringify(notes)) // what is printed on the site
   })  
 
