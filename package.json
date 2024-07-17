@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/vchlinnn/scamp-web-backend-prac/issues"
   },
-  "homepage": "https://github.com/vchlinnn/scamp-web-backend-prac#readme"
+  "homepage": "https://github.com/vchlinnn/scamp-web-backend-prac#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
