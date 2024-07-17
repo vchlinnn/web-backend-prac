@@ -1,12 +1,6 @@
-// import node's built in web server module - import http from 'http'
-const http = require('http')
-
-/*create a new web server
-const app = http.createServer((request, response) => {
-    // event handler - called everytime an HTTP request is made 
-  response.writeHead(200, { 'Content-Type': 'text/plain' })
-  response.end('Hello World')
-})*/
+// express: a function used to create an Express application stored in the app variable
+const express = require('express') 
+const app = express()
 
 let notes = [
     {
@@ -25,15 +19,20 @@ let notes = [
       important: true
     }
   ]
-  // create a new web server
-  const app = http.createServer((request, response) => {
-    // event handler - called everytime an HTTP request is made
-    response.writeHead(200, { 'Content-Type': 'application/json' }) // the data is in json format
-    // notes array gets transformed to json format
-    response.end(JSON.stringify(notes)) // what is printed on the site
-  })  
 
-// listen to HTTP requests sent to port 3001
+// Two routes to the application
+
+// An event handler that handles HTTP GET requests made to the root
+app.get('/', (request, response) => {
+  response.send('<h1>Hello World!</h1>')
+})
+
+// An event handler that handles HTTP GET requests made to the notes path
+app.get('/api/notes', (request, response) => {
+  response.json(notes) // send the notes array as a JSON formatted string
+})
+
 const PORT = 3001
-app.listen(PORT)
-console.log(`Server running on port ${PORT}`)
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
