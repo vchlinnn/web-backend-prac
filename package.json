@@ -1,0 +1,19 @@
+{
+  "name": "part3",
+  "version": "1.0.0",
+  "description": "scamp-backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vchlinnn/scamp-web-backend-prac.git"
+  },
+  "author": "Linh Vu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vchlinnn/scamp-web-backend-prac/issues"
+  },
+  "homepage": "https://github.com/vchlinnn/scamp-web-backend-prac#readme"
+}
