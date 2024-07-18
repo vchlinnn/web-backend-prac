@@ -32,6 +32,18 @@ app.get('/api/notes', (request, response) => {
   response.json(notes) // send the notes array as a JSON formatted string
 })
 
+// a route for fetching a single resource
+app.get('/api/notes/:id', (request, response) => {
+  const id = request.params.id
+  const note = notes.find(note => note.id === id)
+
+  if (note) {
+    response.json(note)
+  } else { // if no note is found
+    response.status(404).end()
+  }
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
