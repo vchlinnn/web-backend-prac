@@ -31,6 +31,12 @@ let notes = [
   app.use(express.json())
   app.use(requestLogger)
 
+  const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+  }
+  
+  app.use(unknownEndpoint)
+
 // Two routes to the application
 
 // An event handler that handles HTTP GET requests made to the root
