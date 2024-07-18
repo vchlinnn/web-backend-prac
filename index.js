@@ -20,6 +20,17 @@ let notes = [
     }
   ]
 
+  const requestLogger = (request, response, next) => {
+    console.log('Method:', request.method)
+    console.log('Path:  ', request.path)
+    console.log('Body:  ', request.body)
+    console.log('---')
+    next()
+  }
+
+  app.use(express.json())
+  app.use(requestLogger)
+
 // Two routes to the application
 
 // An event handler that handles HTTP GET requests made to the root
@@ -61,6 +72,7 @@ const generateId = () => {
 app.post('/api/notes', (request, response) => {
   const body = request.body
 
+  // if the data is missing content property
   if (!body.content) {
     return response.status(400).json({ 
       error: 'content missing' 
