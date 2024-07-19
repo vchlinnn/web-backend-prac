@@ -1,7 +1,9 @@
+require('dotenv').config()
 // express: a function used to create an Express application stored in the app variable
 const express = require('express') 
 const app = express()
 const cors = require('cors')
+const Note = require('./models/note')
 
 app.use(cors())
 
@@ -53,7 +55,6 @@ app.get('/api/notes', (request, response) => {
 })
 
 // a route for fetching a single resource
-/*
 app.get('/api/notes/:id', (request, response) => {
   const id = request.params.id
   const note = notes.find(note => note.id === id)
@@ -63,12 +64,6 @@ app.get('/api/notes/:id', (request, response) => {
   } else { // if no note is found
     response.status(404).end()
   }
-})*/
-
-app.get('/api/notes', (request, response) => {
-  Note.find({}).then(notes => {
-    response.json(notes)
-  })
 })
 
 app.delete('/api/notes/:id', (request, response) => {
@@ -106,23 +101,20 @@ app.post('/api/notes', (request, response) => {
   response.json(note)
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
-const mongoose = require('mongoose')
+const url = process.env.MONGODB_URI
 
-const password = process.argv[2]
+console.log('connecting to', url)
 
-const url = process.env.MONGODB_URI;
-
-mongoose.set('strictQuery',false)
 mongoose.connect(url)
-
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
-})
-
-const Note = mongoose.model('Note', noteSchema)
+  .then(result => {
+    console.log('connected to MongoDB')
+  })
+  .catch(error => {
+    console.log('error connecting to MongoDB:', error.message)
+  })
+  
