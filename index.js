@@ -44,7 +44,7 @@ let notes = [
 
 // Two routes to the application
 
-// An event handler that handles HTTP GET requests made to the root
+/* An event handler that handles HTTP GET requests made to the root
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
@@ -52,6 +52,22 @@ app.get('/', (request, response) => {
 // An event handler that handles HTTP GET requests made to the notes path
 app.get('/api/notes', (request, response) => {
   response.json(notes) // send the notes array as a JSON formatted string
+})
+*/
+
+app.get('/api/notes/:id', (request, response) => {
+  Note.findById(request.params.id)
+    .then(note => {
+      if (note) {
+        response.json(note)
+      } else {
+        response.status(404).end() 
+      }
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(400).send({ error: 'malformatted id' })
+    })
 })
 
 // a route for fetching a single resource
