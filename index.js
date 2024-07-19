@@ -53,6 +53,7 @@ app.get('/api/notes', (request, response) => {
 })
 
 // a route for fetching a single resource
+/*
 app.get('/api/notes/:id', (request, response) => {
   const id = request.params.id
   const note = notes.find(note => note.id === id)
@@ -62,6 +63,12 @@ app.get('/api/notes/:id', (request, response) => {
   } else { // if no note is found
     response.status(404).end()
   }
+})*/
+
+app.get('/api/notes', (request, response) => {
+  Note.find({}).then(notes => {
+    response.json(notes)
+  })
 })
 
 app.delete('/api/notes/:id', (request, response) => {
@@ -108,9 +115,7 @@ const mongoose = require('mongoose')
 
 const password = process.argv[2]
 
-// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
-const url =
-  `mongodb+srv://chuclinh190305:${password}@cluster0.wf6flo9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+const url = process.env.MONGODB_URI;
 
 mongoose.set('strictQuery',false)
 mongoose.connect(url)
