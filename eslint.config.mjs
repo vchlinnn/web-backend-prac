@@ -33,7 +33,10 @@ export default [
         'error',
         'never'
       ],
+      'no-console': 'off',
     },
-      ignores: ["dist/**"],
+  },
+  {
+    ignores: ["dist/**"],
   },
 ]
