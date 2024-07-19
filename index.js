@@ -55,7 +55,8 @@ app.get('/api/notes', (request, response) => {
 })
 */
 
-app.get('/api/notes/:id', (request, response) => {
+// a route for fetching a single resource
+app.get('/api/notes/:id', (request, response, next) => {
   Note.findById(request.params.id)
     .then(note => {
       if (note) {
@@ -64,22 +65,7 @@ app.get('/api/notes/:id', (request, response) => {
         response.status(404).end() 
       }
     })
-    .catch(error => {
-      console.log(error)
-      response.status(400).send({ error: 'malformatted id' })
-    })
-})
-
-// a route for fetching a single resource
-app.get('/api/notes/:id', (request, response) => {
-  const id = request.params.id
-  const note = notes.find(note => note.id === id)
-
-  if (note) {
-    response.json(note)
-  } else { // if no note is found
-    response.status(404).end()
-  }
+    .catch(error => next(error))
 })
 
 app.delete('/api/notes/:id', (request, response) => {
@@ -133,4 +119,17 @@ mongoose.connect(url)
   .catch(error => {
     console.log('error connecting to MongoDB:', error.message)
   })
+
+  const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+  
+    if (error.name === 'CastError') {
+      return response.status(400).send({ error: 'malformatted id' })
+    } 
+  
+    next(error)
+  }
+  
+  // this has to be the last loaded middleware, also all the routes should be registered before this!
+  app.use(errorHandler)
   
