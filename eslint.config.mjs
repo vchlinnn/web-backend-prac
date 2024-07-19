@@ -13,7 +13,7 @@ export default [
       },
       ecmaVersion: "latest",
     },
-    plugins: {
+    plugins: { // extend eslint's functionality - add custom rules, configurations
       '@stylistic/js': stylisticJs
     },
     rules: {
@@ -34,5 +34,6 @@ export default [
         'never'
       ],
     },
+      ignores: ["dist/**"],
   },
 ]
